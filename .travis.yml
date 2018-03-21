@@ -1,0 +1,16 @@
+language: ruby
+rvm: 2.4.2
+dist: trusty
+sudo: false
+before_install:
+  - "echo '--colour' > ~/.rspec"
+bundler_args: --without production,staging,development
+before_script:
+  - cp config/database.yml.example config/database.yml
+  - RAILS_ENV=test bundle exec rake db:drop db:create db:migrate
+cache:
+  bundler: true
+addons:
+  postgresql: 9.3
+script:
+  - bundle exec massa -V
